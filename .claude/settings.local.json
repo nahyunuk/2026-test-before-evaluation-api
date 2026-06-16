@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pip install *)",
+      "Bash(python -m uvicorn main:app --host 0.0.0.0 --port 8000)",
+      "Bash(curl -s http://localhost:8000/jobs)",
+      "Bash(python -m json.tool --no-ensure-ascii)",
+      "Bash(curl -s -X POST http://localhost:8000/auth/login -H \"Content-Type: application/json\" -d \"{\\\\\"email\\\\\":\\\\\"test@example.com\\\\\",\\\\\"password\\\\\":\\\\\"Test1234!\\\\\"}\")",
+      "Bash(curl -s http://localhost:8000/jobs/recommended?limit=3)",
+      "Bash(curl -s http://localhost:8000/jobs/1)",
+      "Bash(curl -s http://localhost:8000/jobs/99)",
+      "Bash(curl -s \"http://localhost:8000/interview/questions?jobRole=FRONTEND&userId=1\")",
+      "Bash(curl -s http://localhost:8000/search/popular)",
+      "PowerShell(New-NetFirewallRule *)",
+      "Bash(Stop-Process -Name python -Force -ErrorAction SilentlyContinue)",
+      "Bash(Start-Sleep -Milliseconds 500)",
+      "PowerShell(Get-Process *)",
+      "Bash(curl *)",
+      "Bash(python *)"
+    ]
+  }
+}

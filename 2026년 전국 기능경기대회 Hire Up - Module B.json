@@ -1,0 +1,190 @@
+{
+  "version": 6,
+  "entities": [
+    {
+      "entity": {
+        "type": "Project",
+        "description": "##### Authentication\n- Header: `Authorization: Bearer ${\"token\"}` 또는\n- Query: `userId=${userId}`\n\n##### Environments\n- `baseUrl`: API 서버 호스트\n- `token`: Bearer 토큰\n- `userId`: 사용자 ID (인증 대체 시)",
+        "id": "0dd3a687-1ea8-41fd-a421-4791750d1a91",
+        "name": "2026년 전국 기능경기대회 Hire Up - Module B"
+      },
+      "children": [
+        {
+          "entity": {
+            "type": "Service",
+            "id": "b27ab9c0-78cf-449a-8a58-b6545674a251",
+            "name": "001. 추천 공고"
+          },
+          "children": [
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "link": "https://tools.ietf.org/html/rfc7231#section-4.3",
+                  "name": "GET"
+                },
+                "body": {
+                  "bodyType": "Text",
+                  "textBody": ""
+                },
+                "uri": {
+                  "scheme": {
+                    "name": "http",
+                    "version": "V11"
+                  },
+                  "host": "${baseUrl}",
+                  "path": "/jobs/recommended",
+                  "query": {
+                    "delimiter": "&",
+                    "items": [
+                      {
+                        "enabled": false,
+                        "name": "limit",
+                        "value": "10"
+                      }
+                    ]
+                  }
+                },
+                "description": "##### Query Parameters\n| 필드 | 타입 | 필수 | 설명 |\n|---|---|---|---|\n| limit | int | N | 조회 개수 제한 (홈 가로 스크롤용). 미지정 시 전체 |\n\n##### 200 OK\n```\n{\n    \"success\": true,\n    \"data\": {\n        \"items\": [\n            {\n                \"id\": 1,\n                \"companyName\": \"테크컴퍼니\",\n                \"companyLogo\": \"https://cdn.hireup.com/logo/1.png\",\n                \"jobTitle\": \"프론트엔드 개발자\",\n                \"location\": \"서울 강남구\",\n                \"employmentType\": \"정규직\",\n                \"career\": \"경력 3년↑\",\n                \"salary\": \"4,000~6,000만원\",\n                \"deadlineLabel\": \"3일 전\",\n                \"dDay\": \"D-3\",\n                \"recruitStatus\": \"OPEN\"\n            }\n        ]\n    }\n}\n```\n\n##### recruitStatus 코드\n| code | description |\n|---|---|\n| OPEN | 채용중 (#3366FF) |\n| CLOSING | 마감임박 (#FF9500) |\n| CLOSED | 마감 (#999999) |",
+                "id": "5970ee76-0dee-4666-aa61-2713b3b7f6ad",
+                "name": "오늘의 추천 공고 조회",
+                "headers": [],
+                "assertions": []
+              }
+            }
+          ]
+        },
+        {
+          "entity": {
+            "type": "Service",
+            "id": "7883d2b0-2e13-481c-9007-4bab7431af61",
+            "name": "002. 공고 상세"
+          },
+          "children": [
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "link": "https://tools.ietf.org/html/rfc7231#section-4.3",
+                  "name": "GET"
+                },
+                "body": {
+                  "bodyType": "Text",
+                  "textBody": ""
+                },
+                "uri": {
+                  "scheme": {
+                    "name": "http",
+                    "version": "V11"
+                  },
+                  "host": "${baseUrl}",
+                  "path": "/jobs/1"
+                },
+                "description": "##### Path Parameters\n| 필드 | 타입 | 필수 | 설명 |\n|---|---|---|---|\n| id | int | Y | 공고 ID |\n\n##### 200 OK\n```\n{\n    \"success\": true,\n    \"data\": {\n        \"id\": 1,\n        \"companyName\": \"테크컴퍼니\",\n        \"companyLogo\": \"https://cdn.hireup.com/logo/1.png\",\n        \"jobTitle\": \"프론트엔드 개발자\",\n        \"recruitStatus\": \"OPEN\",\n        \"location\": \"서울 강남구\",\n        \"career\": \"경력 3년↑\",\n        \"salary\": \"4,000~6,000만원\",\n        \"employmentType\": \"정규직\",\n        \"deadline\": \"2026-06-30\",\n        \"positionIntro\": \"사용자 경험을 책임지는 프론트엔드 개발자를 찾습니다.\",\n        \"tasks\": [\"웹 서비스 UI 개발\", \"사내 디자인 시스템 구축\"],\n        \"qualifications\": [\"React 3년 이상 경험\", \"REST API 연동 경험\"],\n        \"benefits\": [\"유연근무\", \"식대 지원\", \"교육비 지원\"]\n    }\n}\n```\n\n##### recruitStatus 코드\n| code | description |\n|---|---|\n| OPEN | 채용중 (#3366FF) |\n| CLOSING | 마감임박 (#FF9500) |\n| CLOSED | 마감 (#999999) |\n\n##### 404 Not Found\n```\n{\n    \"success\": false,\n    \"message\": \"공고를 찾을 수 없습니다.\",\n    \"errors\": [ { \"code\": \"NOT_FOUND\", \"field\": \"id\", \"message\": \"존재하지 않는 공고입니다.\" } ]\n}\n```",
+                "id": "d7eff127-5d3f-4ea1-a62b-58624786da40",
+                "name": "공고 상세 조회",
+                "headers": [],
+                "assertions": []
+              }
+            }
+          ]
+        },
+        {
+          "entity": {
+            "type": "Service",
+            "id": "fbc1f3ee-4e78-4502-9190-019359720789",
+            "name": "003. AI 모의 면접"
+          },
+          "children": [
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "link": "https://tools.ietf.org/html/rfc7231#section-4.3",
+                  "name": "GET"
+                },
+                "body": {
+                  "bodyType": "Text",
+                  "textBody": ""
+                },
+                "uri": {
+                  "scheme": {
+                    "name": "http",
+                    "version": "V11"
+                  },
+                  "host": "${baseUrl}",
+                  "path": "/interview/questions",
+                  "query": {
+                    "delimiter": "&",
+                    "items": [
+                      {
+                        "enabled": true,
+                        "name": "jobRole",
+                        "value": "FRONTEND"
+                      },
+                      {
+                        "enabled": false,
+                        "name": "career",
+                        "value": "JUNIOR"
+                      },
+                      {
+                        "enabled": false,
+                        "name": "type",
+                        "value": "GENERAL"
+                      },
+                      {
+                        "enabled": true,
+                        "name": "userId",
+                        "value": "${userId}"
+                      }
+                    ]
+                  }
+                },
+                "description": "##### Query Parameters\n| 필드 | 타입 | 필수 | 설명 |\n|---|---|---|---|\n| jobRole | string | Y | 직무 코드. 질문 내용이 직무별로 구분됨 |\n| career | string | N | 연차 코드 |\n| type | string | N | 면접 유형 코드 |\n\n##### career 코드\n| code | description |\n|---|---|\n| NEW | 신입 (0~1년) |\n| JUNIOR | 주니어 (2~3년) |\n| MIDDLE | 미들 (4~7년) |\n| SENIOR | 시니어 (8년+) |\n\n##### type 코드\n| code | description |\n|---|---|\n| GENERAL | 일반 면접 |\n| PRACTICAL | 실무 면접 |\n| PERSONALITY | 인성 면접 |\n\n##### 200 OK\n```\n{\n    \"success\": true,\n    \"data\": {\n        \"jobRole\": \"FRONTEND\",\n        \"total\": 5,\n        \"questions\": [\n            {\n                \"questionNumber\": 1,\n                \"questionText\": \"자기소개를 부탁드립니다.\",\n                \"audioUrl\": \"https://cdn.hireup.com/interview/q1.mp3\",\n                \"duration\": 8\n            }\n        ]\n    }\n}\n```",
+                "id": "3cb43bb1-b3be-41f2-95ff-a0c0a3b4813d",
+                "name": "면접 질문 조회",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "Authorization",
+                    "value": "Bearer ${\"token\"}"
+                  }
+                ],
+                "assertions": []
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "environments": [
+    {
+      "id": "761c87e0-40a0-4921-9379-eeeee4d259bc",
+      "name": "2026년 전국 기능경기대회 Hire Up - Module B",
+      "variables": {
+        "ede40c00-8cbd-44ca-9326-b30023df623a": {
+          "createdAt": "2026-05-28T18:00:00.000+09:00",
+          "name": "baseUrl",
+          "value": "http://api.hireup.com",
+          "enabled": true,
+          "private": false
+        },
+        "520ff684-53dd-4d6d-bf15-60ccf2865190": {
+          "createdAt": "2026-05-28T18:00:00.000+09:00",
+          "name": "token",
+          "value": "token_example",
+          "enabled": true,
+          "private": false
+        },
+        "0bfa288c-349f-4c59-8f53-a8422aab4b0e": {
+          "createdAt": "2026-05-28T18:00:00.000+09:00",
+          "name": "userId",
+          "value": "1",
+          "enabled": true,
+          "private": false
+        }
+      }
+    }
+  ]
+}

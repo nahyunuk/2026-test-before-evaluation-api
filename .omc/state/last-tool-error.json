@@ -1,0 +1,7 @@
+{
+  "tool_name": "Bash",
+  "tool_input_preview": "{\"command\":\"Stop-Process -Name python -Force -ErrorAction SilentlyContinue; Start-Sleep -Milliseconds 500\",\"description\":\"Kill existing Python server\"}",
+  "error": "Exit code 127\n/usr/bin/bash: line 1: Stop-Process: command not found\n/usr/bin/bash: line 1: Start-Sleep: command not found",
+  "timestamp": "2026-06-16T08:21:54.133Z",
+  "retry_count": 1
+}

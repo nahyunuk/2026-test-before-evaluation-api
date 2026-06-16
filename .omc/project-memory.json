@@ -1,0 +1,65 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1781594734059,
+  "projectRoot": "C:\\Users\\user\\PycharmProjects\\20026-test-api",
+  "techStack": {
+    "languages": [],
+    "frameworks": [],
+    "packageManager": null,
+    "runtime": null
+  },
+  "build": {
+    "buildCommand": null,
+    "testCommand": null,
+    "lintCommand": null,
+    "devCommand": null,
+    "scripts": {}
+  },
+  "conventions": {
+    "namingStyle": null,
+    "importStyle": null,
+    "testPattern": null,
+    "fileOrganization": null
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [],
+    "gitBranches": null
+  },
+  "customNotes": [],
+  "directoryMap": {},
+  "hotPaths": [
+    {
+      "path": "main.py",
+      "accessCount": 10,
+      "lastAccessed": 1781607361589,
+      "type": "file"
+    },
+    {
+      "path": "",
+      "accessCount": 4,
+      "lastAccessed": 1781607882970,
+      "type": "directory"
+    },
+    {
+      "path": "2026년 전국 기능경기대회 Hire Up - Module A.json",
+      "accessCount": 3,
+      "lastAccessed": 1781607882084,
+      "type": "file"
+    },
+    {
+      "path": "2026년 전국 기능경기대회 Hire Up - Module B.json",
+      "accessCount": 2,
+      "lastAccessed": 1781607882283,
+      "type": "file"
+    },
+    {
+      "path": "README.md",
+      "accessCount": 2,
+      "lastAccessed": 1781607951149,
+      "type": "file"
+    }
+  ],
+  "userDirectives": []
+}
