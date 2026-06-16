@@ -6,6 +6,43 @@
 
 ---
 
+## 로컬 실행
+
+### 요구사항
+- Python 3.10 이상
+
+### 설치 및 실행
+
+```bash
+# 1. 가상환경 활성화
+.venv\Scripts\activate  # Windows
+
+# 2. 패키지 설치
+pip install -r requirements.txt
+
+# 3. 서버 실행
+uvicorn main:app --reload --port 3000 --host 0.0.0.0
+```
+
+서버가 실행되면 `http://localhost:3000` 으로 접속할 수 있습니다.
+
+| URL | 설명 |
+|---|---|
+| `http://localhost:3000` | API 서버 |
+| `http://localhost:3000/docs` | Swagger UI (자동 생성) |
+| `http://localhost:3000/redoc` | ReDoc 문서 |
+
+### 테스트 계정
+
+| 항목 | 값 |
+|---|---|
+| 이메일 | `test@example.com` |
+| 비밀번호 | `Test1234!` |
+| 토큰 | `test_token` |
+| 사용자 ID | `1` |
+
+---
+
 ## 인증
 
 | 방식 | 형식 |
