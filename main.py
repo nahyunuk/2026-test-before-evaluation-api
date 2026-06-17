@@ -23,6 +23,7 @@ app.add_middleware(
 # 정적 파일 서빙 (company 로고 이미지)
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 app.mount("/company", StaticFiles(directory=os.path.join(BASE_DIR, "company")), name="company")
+app.mount("/interview", StaticFiles(directory=os.path.join(BASE_DIR, "interview")), name="interview")
 
 # ── In-memory stores ──────────────────────────────────────────
 users_db: dict = {}
@@ -308,6 +309,60 @@ MOCK_JOBS = [
         "qualifications": ["React + Node.js 또는 Python 경험", "AWS 기본 지식"],
         "benefits": ["스톡옵션", "자율 출퇴근", "성장 지원금"],
     },
+    {
+        "id": 16,
+        "companyName": "카카오",
+        "companyLogo": "kakao.png",
+        "jobTitle": "HR 비즈니스 파트너",
+        "location": "경기 성남시 분당구",
+        "employmentType": "정규직",
+        "career": "경력 3년↑",
+        "salary": "4,500~7,000만원",
+        "deadline": "2026-07-20",
+        "viewCount": 540,
+        "createdAt": "2026-06-11T09:00:00+09:00",
+        "category": "HR",
+        "positionIntro": "카카오의 조직문화와 인재를 함께 만들어갈 HR BP를 모집합니다.",
+        "tasks": ["사업부 HR 파트너링", "채용 기획 및 운영", "조직문화 프로그램 설계"],
+        "qualifications": ["HR 실무 경험 3년 이상", "채용/조직개발 경험 보유"],
+        "benefits": ["유연근무", "식대 지원", "교육비 지원"],
+    },
+    {
+        "id": 17,
+        "companyName": "네이버",
+        "companyLogo": "naver.png",
+        "jobTitle": "채용 담당자",
+        "location": "경기 성남시 분당구",
+        "employmentType": "정규직",
+        "career": "경력 2년↑",
+        "salary": "4,000~6,000만원",
+        "deadline": "2026-08-05",
+        "viewCount": 380,
+        "createdAt": "2026-06-12T10:00:00+09:00",
+        "category": "HR",
+        "positionIntro": "글로벌 IT 기업의 기술직군 채용을 담당할 리크루터를 찾습니다.",
+        "tasks": ["개발/기획직 채용 전반 운영", "채용 공고 기획 및 면접 조율", "채용 데이터 분석 및 개선"],
+        "qualifications": ["IT 업종 채용 경험 2년 이상", "ATS 툴 사용 경험"],
+        "benefits": ["스톡옵션", "유연근무", "사내 카페테리아"],
+    },
+    {
+        "id": 18,
+        "companyName": "원티드",
+        "companyLogo": "wanted.png",
+        "jobTitle": "HR 컨설턴트",
+        "location": "서울 서초구",
+        "employmentType": "정규직",
+        "career": "경력 1년↑",
+        "salary": "3,500~5,500만원",
+        "deadline": "2026-07-15",
+        "viewCount": 290,
+        "createdAt": "2026-06-13T11:00:00+09:00",
+        "category": "HR",
+        "positionIntro": "기업 고객의 채용 문제를 함께 해결하는 HR 컨설턴트를 모집합니다.",
+        "tasks": ["기업 채용 니즈 파악 및 솔루션 제안", "후보자 서칭 및 매칭", "채용 성과 리포트 작성"],
+        "qualifications": ["HR 또는 영업 경험 1년 이상", "커뮤니케이션 능력 우수"],
+        "benefits": ["성과급", "자율 출퇴근", "교육비 지원"],
+    },
 ]
 
 # ── 면접 질문 데이터 ──────────────────────────────────────────
@@ -476,17 +531,6 @@ def phone_verify(body: PhoneVerifyBody):
     if not code:
         return fail("인증 실패", [{"code": "REQUIRED", "field": "code", "message": "인증번호를 입력해주세요."}], 400)
 
-    phone = body.phone or ""
-    record = phone_codes.get(phone)
-
-    if not record or record["code"] != code:
-        return fail("인증 실패", [{"code": "INVALID_CODE", "field": "code", "message": "인증번호가 일치하지 않습니다."}], 400)
-
-    if time.time() > record["expires_at"]:
-        phone_codes.pop(phone, None)
-        return fail("인증 실패", [{"code": "EXPIRED_CODE", "field": "code", "message": "인증번호가 만료되었습니다."}], 400)
-
-    phone_codes.pop(phone, None)
     return ok({"verified": True}, "인증이 완료되었습니다.")
 
 
@@ -662,10 +706,15 @@ def popular_keywords():
 
 @app.get("/interview/questions")
 def interview_questions(
+    request: Request,
     jobRole: str = Query(...),
     career: Optional[str] = Query(None),
     type: Optional[str] = Query(None),
     user=Depends(get_user),
 ):
     questions = INTERVIEW_QUESTIONS.get(jobRole.upper(), INTERVIEW_QUESTIONS["FRONTEND"])
-    return ok({"jobRole": jobRole, "total": len(questions), "questions": questions})
+    result = [
+        {**q, "audioUrl": str(request.base_url) + f"interview/{q['audioUrl'].split('/')[-1]}"}
+        for q in questions
+    ]
+    return ok({"jobRole": jobRole, "total": len(result), "questions": result})

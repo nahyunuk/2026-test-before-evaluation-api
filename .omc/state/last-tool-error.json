@@ -1,7 +1,7 @@
 {
-  "tool_name": "Bash",
-  "tool_input_preview": "{\"command\":\"Stop-Process -Name python -Force -ErrorAction SilentlyContinue; Start-Sleep -Milliseconds 500\",\"description\":\"Kill existing Python server\"}",
-  "error": "Exit code 127\n/usr/bin/bash: line 1: Stop-Process: command not found\n/usr/bin/bash: line 1: Start-Sleep: command not found",
-  "timestamp": "2026-06-16T08:21:54.133Z",
+  "tool_name": "PowerShell",
+  "tool_input_preview": "{\"command\":\"cd \\\"C:\\\\Users\\\\user\\\\PycharmProjects\\\\20026-test-api\\\"; .venv\\\\Scripts\\\\python -c \\\"\\nimport main\\nfrom fastapi.testclient import TestClient\\nclient = TestClient(main.app)\\nres = client.g...",
+  "error": "Exit code 1\nTraceback (most recent call last):\r\n  File \"<string>\", line 3, in <module>\r\n    from fastapi.testclient import TestClient\r\n  File \"C:\\Users\\user\\PycharmProjects\\20026-test-api\\.venv\\Lib\\site-packages\\fastapi\\testclient.py\", line 1, in <module>\r\n    from starlette.testclient import TestClient as TestClient  # noqa\r\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\r\n  File \"C:\\Users\\user\\PycharmProjects\\20026-test-api\\.venv\\Lib\\site-packages\\starlette\\testclient.py\", line 4...",
+  "timestamp": "2026-06-17T05:18:07.224Z",
   "retry_count": 1
 }

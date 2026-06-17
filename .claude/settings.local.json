@@ -16,7 +16,8 @@
       "Bash(Start-Sleep -Milliseconds 500)",
       "PowerShell(Get-Process *)",
       "Bash(curl *)",
-      "Bash(python *)"
+      "Bash(python *)",
+      "PowerShell(ffmpeg *)"
     ]
   }
 }

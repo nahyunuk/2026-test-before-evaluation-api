@@ -32,8 +32,8 @@
   "hotPaths": [
     {
       "path": "main.py",
-      "accessCount": 11,
-      "lastAccessed": 1781608165872,
+      "accessCount": 17,
+      "lastAccessed": 1781673733124,
       "type": "file"
     },
     {
@@ -64,6 +64,12 @@
       "path": "requirements.txt",
       "accessCount": 1,
       "lastAccessed": 1781608165320,
+      "type": "file"
+    },
+    {
+      "path": "generate_audio.py",
+      "accessCount": 1,
+      "lastAccessed": 1781673280737,
       "type": "file"
     }
   ],
