@@ -7,6 +7,8 @@ from typing import Optional, Any
 import re
 import secrets
 import time
+import subprocess
+import socket
 from datetime import date
 import os
 
@@ -460,6 +462,7 @@ class LoginBody(BaseModel):
 
 class PhoneSendBody(BaseModel):
     phone: Optional[str] = None
+    adbHost: Optional[str] = None
 
 
 class PhoneVerifyBody(BaseModel):
@@ -520,7 +523,42 @@ def phone_send(body: PhoneSendBody):
     if errors:
         return fail("인증번호 발송 실패", errors, 400)
 
-    phone_codes[phone] = {"code": "123456", "expires_at": time.time() + 180}
+    code = str(secrets.randbelow(900000) + 100000)
+    phone_codes[phone] = {"code": code, "expires_at": time.time() + 180}
+    message = f"[Web] 인증번호 [{code}]입니다."
+
+    def send_sms_via_console(host: str, port: int, phone: str, message: str):
+        token_path = os.path.expanduser("~/.emulator_console_auth_token")
+        token = ""
+        if os.path.exists(token_path):
+            with open(token_path, "r") as f:
+                token = f.read().strip()
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+            s.settimeout(5)
+            s.connect((host, port))
+            time.sleep(0.5)
+            buf = b""
+            while True:
+                try:
+                    chunk = s.recv(4096)
+                    buf += chunk
+                    if b"OK" in chunk:
+                        break
+                except socket.timeout:
+                    break
+            if token:
+                s.sendall(f"auth {token}\n".encode("utf-8"))
+                time.sleep(0.3)
+                s.recv(1024)
+            s.sendall(f"sms send {phone} {message}\n".encode("utf-8"))
+            time.sleep(0.3)
+            s.recv(1024)
+
+    try:
+        send_sms_via_console("127.0.0.1", 5554, phone, message)
+    except Exception:
+        pass
+
     return ok({"expiresIn": 180}, "인증번호가 발송되었습니다.")
 
 

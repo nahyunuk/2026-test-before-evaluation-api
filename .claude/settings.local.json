@@ -17,7 +17,11 @@
       "PowerShell(Get-Process *)",
       "Bash(curl *)",
       "Bash(python *)",
-      "PowerShell(ffmpeg *)"
+      "PowerShell(ffmpeg *)",
+      "PowerShell(adb connect *)",
+      "PowerShell(& \"C:\\\\Users\\\\user\\\\AppData\\\\Local\\\\Android\\\\Sdk\\\\platform-tools\\\\adb.exe\" emu sms send 01000000000 123456)",
+      "PowerShell(& \"C:\\\\Users\\\\user\\\\AppData\\\\Local\\\\Android\\\\Sdk\\\\platform-tools\\\\adb.exe\" connect 10.53.68.33:5555)",
+      "Bash(.venv/Scripts/python *)"
     ]
   }
 }

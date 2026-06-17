@@ -32,8 +32,8 @@
   "hotPaths": [
     {
       "path": "main.py",
-      "accessCount": 17,
-      "lastAccessed": 1781673733124,
+      "accessCount": 28,
+      "lastAccessed": 1781693892621,
       "type": "file"
     },
     {
@@ -58,6 +58,12 @@
       "path": "README.md",
       "accessCount": 2,
       "lastAccessed": 1781607951149,
+      "type": "file"
+    },
+    {
+      "path": "test_sms.py",
+      "accessCount": 2,
+      "lastAccessed": 1781693788085,
       "type": "file"
     },
     {
