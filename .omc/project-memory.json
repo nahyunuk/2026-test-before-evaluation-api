@@ -1,11 +1,20 @@
 {
   "version": "1.0.0",
-  "lastScanned": 1781594734059,
+  "lastScanned": 1781782824547,
   "projectRoot": "C:\\Users\\user\\PycharmProjects\\20026-test-api",
   "techStack": {
-    "languages": [],
+    "languages": [
+      {
+        "name": "Python",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "requirements.txt"
+        ]
+      }
+    ],
     "frameworks": [],
-    "packageManager": null,
+    "packageManager": "pip",
     "runtime": null
   },
   "build": {
@@ -28,55 +37,55 @@
     "gitBranches": null
   },
   "customNotes": [],
-  "directoryMap": {},
+  "directoryMap": {
+    "company": {
+      "path": "company",
+      "purpose": null,
+      "fileCount": 15,
+      "lastAccessed": 1781782824511,
+      "keyFiles": [
+        "aws.png",
+        "coupang.png",
+        "flowtech.png",
+        "kakao.png",
+        "karrot.png"
+      ]
+    },
+    "interview": {
+      "path": "interview",
+      "purpose": null,
+      "fileCount": 25,
+      "lastAccessed": 1781782824512,
+      "keyFiles": [
+        "be_q1.mp3",
+        "be_q2.mp3",
+        "be_q3.mp3",
+        "be_q4.mp3",
+        "be_q5.mp3"
+      ]
+    },
+    "__pycache__": {
+      "path": "__pycache__",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1781782824513,
+      "keyFiles": [
+        "main.cpython-314.pyc"
+      ]
+    }
+  },
   "hotPaths": [
     {
       "path": "main.py",
-      "accessCount": 28,
-      "lastAccessed": 1781693892621,
+      "accessCount": 34,
+      "lastAccessed": 1781849549681,
       "type": "file"
     },
     {
       "path": "",
-      "accessCount": 6,
-      "lastAccessed": 1781608162348,
+      "accessCount": 1,
+      "lastAccessed": 1781782859438,
       "type": "directory"
-    },
-    {
-      "path": "2026년 전국 기능경기대회 Hire Up - Module A.json",
-      "accessCount": 3,
-      "lastAccessed": 1781607882084,
-      "type": "file"
-    },
-    {
-      "path": "2026년 전국 기능경기대회 Hire Up - Module B.json",
-      "accessCount": 2,
-      "lastAccessed": 1781607882283,
-      "type": "file"
-    },
-    {
-      "path": "README.md",
-      "accessCount": 2,
-      "lastAccessed": 1781607951149,
-      "type": "file"
-    },
-    {
-      "path": "test_sms.py",
-      "accessCount": 2,
-      "lastAccessed": 1781693788085,
-      "type": "file"
-    },
-    {
-      "path": "requirements.txt",
-      "accessCount": 1,
-      "lastAccessed": 1781608165320,
-      "type": "file"
-    },
-    {
-      "path": "generate_audio.py",
-      "accessCount": 1,
-      "lastAccessed": 1781673280737,
-      "type": "file"
     }
   ],
   "userDirectives": []
