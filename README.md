@@ -165,7 +165,7 @@ uvicorn main:app --reload --port 3000 --host 0.0.0.0
 
 | 파라미터 | 타입 | 필수 | 설명 |
 |---|---|---|---|
-| jobRole | string | Y | 직무 코드 (`FRONTEND` / `BACKEND` / `DATA` / `PM` / `DESIGN`) |
+| jobRole | string | Y | 직무 코드 (`FRONTEND` / `BACKEND` / `DATA` / `PM` / `DESIGN` / `APP`) |
 | career | string | N | 연차 코드 |
 | type | string | N | 면접 유형 코드 |
 

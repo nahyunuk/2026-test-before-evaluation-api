@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "lastScanned": 1781782824547,
+  "lastScanned": 1781930582317,
   "projectRoot": "C:\\Users\\user\\PycharmProjects\\20026-test-api",
   "techStack": {
     "languages": [
@@ -42,7 +42,7 @@
       "path": "company",
       "purpose": null,
       "fileCount": 15,
-      "lastAccessed": 1781782824511,
+      "lastAccessed": 1781930582271,
       "keyFiles": [
         "aws.png",
         "coupang.png",
@@ -55,7 +55,7 @@
       "path": "interview",
       "purpose": null,
       "fileCount": 25,
-      "lastAccessed": 1781782824512,
+      "lastAccessed": 1781930582272,
       "keyFiles": [
         "be_q1.mp3",
         "be_q2.mp3",
@@ -68,7 +68,7 @@
       "path": "__pycache__",
       "purpose": null,
       "fileCount": 1,
-      "lastAccessed": 1781782824513,
+      "lastAccessed": 1781930582273,
       "keyFiles": [
         "main.cpython-314.pyc"
       ]
@@ -77,15 +77,21 @@
   "hotPaths": [
     {
       "path": "main.py",
-      "accessCount": 34,
-      "lastAccessed": 1781849549681,
+      "accessCount": 38,
+      "lastAccessed": 1781931824820,
       "type": "file"
     },
     {
       "path": "",
-      "accessCount": 1,
-      "lastAccessed": 1781782859438,
+      "accessCount": 2,
+      "lastAccessed": 1781931009716,
       "type": "directory"
+    },
+    {
+      "path": "README.md",
+      "accessCount": 2,
+      "lastAccessed": 1781931026840,
+      "type": "file"
     }
   ],
   "userDirectives": []

@@ -25,7 +25,7 @@ app.add_middleware(
 # 정적 파일 서빙 (company 로고 이미지)
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 app.mount("/company", StaticFiles(directory=os.path.join(BASE_DIR, "company")), name="company")
-app.mount("/interview", StaticFiles(directory=os.path.join(BASE_DIR, "interview")), name="interview")
+app.mount("/interview-audio", StaticFiles(directory=os.path.join(BASE_DIR, "interview")), name="interview")
 
 # ── In-memory stores ──────────────────────────────────────────
 users_db: dict = {}
@@ -404,6 +404,13 @@ INTERVIEW_QUESTIONS: dict = {
         {"questionNumber": 4, "questionText": "개발자와 소통할 때 사용하는 방법을 말씀해주세요.", "audioUrl": "https://cdn.hireup.com/interview/ds_q4.mp3", "duration": 12},
         {"questionNumber": 5, "questionText": "사용자 피드백을 디자인에 반영한 사례를 공유해주세요.", "audioUrl": "https://cdn.hireup.com/interview/ds_q5.mp3", "duration": 12},
     ],
+    "APP": [
+        {"questionNumber": 1, "questionText": "자기소개를 부탁드립니다.", "audioUrl": "https://cdn.hireup.com/interview/app_q1.mp3", "duration": 8},
+        {"questionNumber": 2, "questionText": "iOS와 Android 개발의 차이점에 대해 설명해주세요.", "audioUrl": "https://cdn.hireup.com/interview/app_q2.mp3", "duration": 10},
+        {"questionNumber": 3, "questionText": "앱 성능 최적화를 위해 사용한 방법을 말씀해주세요.", "audioUrl": "https://cdn.hireup.com/interview/app_q3.mp3", "duration": 10},
+        {"questionNumber": 4, "questionText": "앱 배포 경험과 스토어 심사 과정에 대해 설명해주세요.", "audioUrl": "https://cdn.hireup.com/interview/app_q4.mp3", "duration": 12},
+        {"questionNumber": 5, "questionText": "네이티브 앱과 크로스플랫폼 앱의 장단점을 설명해주세요.", "audioUrl": "https://cdn.hireup.com/interview/app_q5.mp3", "duration": 12},
+    ],
 }
 
 
@@ -763,7 +770,7 @@ def interview_questions(
 ):
     questions = INTERVIEW_QUESTIONS.get(jobRole.upper(), INTERVIEW_QUESTIONS["FRONTEND"])
     result = [
-        {**q, "audioUrl": str(request.base_url) + f"interview/{q['audioUrl'].split('/')[-1]}"}
+        {**q, "audioUrl": str(request.base_url) + f"interview-audio/{q['audioUrl'].split('/')[-1]}"}
         for q in questions
     ]
     return ok({"jobRole": jobRole, "total": len(result), "questions": result})
