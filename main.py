@@ -3,13 +3,13 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
-from typing import Optional, Any
+from typing import Optional, Any, List
 import re
 import secrets
 import time
 import subprocess
 import socket
-from datetime import date
+from datetime import date, datetime, timezone, timedelta
 import os
 
 app = FastAPI(title="Hire Up API", version="1.0.0")
@@ -35,9 +35,17 @@ phone_codes: dict = {}
 _next_id = 2
 
 # 테스트용 기본 유저
-users_db[1] = {"id": 1, "email": "test@example.com", "name": "홍길동", "phone": "01000000000", "password": "Test1234!"}
+users_db[1] = {"id": 1, "email": "test@example.com", "name": "홍길동", "phone": "01000000000", "password": "Test1234!", "intro": "성장하는 개발자입니다"}
 email_index["test@example.com"] = 1
 tokens_db["test_token"] = 1
+
+# 이력서 데이터
+resumes_db: dict = {}  # {user_id: {resume_id: data}}
+_next_resume_id = 1
+
+# 북마크/면접 카운트 (다른 모듈에서 관리되는 값 반영)
+bookmarks_count: dict = {1: 5}
+interviews_count: dict = {1: 3}
 
 # ── Mock 공고 데이터 ──────────────────────────────────────────
 MOCK_JOBS = [
@@ -484,6 +492,17 @@ class SignupBody(BaseModel):
     phone: Optional[str] = None
 
 
+class ResumeBody(BaseModel):
+    title: Optional[str] = None
+    jobRole: Optional[str] = None
+    oneLineIntro: Optional[str] = None
+    intro: Optional[str] = None
+    educations: Optional[List[Any]] = None
+    careers: Optional[List[Any]] = None
+    projects: Optional[List[Any]] = None
+    skills: Optional[List[str]] = None
+
+
 # ── 인증 ──────────────────────────────────────────────────────
 
 @app.post("/auth/login")
@@ -774,3 +793,127 @@ def interview_questions(
         for q in questions
     ]
     return ok({"jobRole": jobRole, "total": len(result), "questions": result})
+
+
+# ── 프로필 ────────────────────────────────────────────────────
+
+@app.get("/profile")
+def get_profile(user=Depends(get_user)):
+    if not user:
+        return fail("인증이 필요합니다.", [{"code": "UNAUTHORIZED", "message": "로그인이 필요합니다."}], 401)
+
+    uid = user["id"]
+    return ok({
+        "user": {
+            "id": user["id"],
+            "name": user["name"],
+            "email": user["email"],
+            "intro": user.get("intro", ""),
+        },
+        "stats": {
+            "bookmarkCount": bookmarks_count.get(uid, 0),
+            "interviewCount": interviews_count.get(uid, 0),
+            "resumeCount": len(resumes_db.get(uid, {})),
+        },
+    })
+
+
+# ── 이력서 ────────────────────────────────────────────────────
+
+@app.get("/resumes")
+def list_resumes(user=Depends(get_user)):
+    if not user:
+        return fail("인증이 필요합니다.", [{"code": "UNAUTHORIZED", "message": "로그인이 필요합니다."}], 401)
+
+    uid = user["id"]
+    items = [
+        {
+            "id": r["id"],
+            "title": r.get("title", ""),
+            "updatedAt": r.get("updatedAt", ""),
+            "skills": r.get("skills", []),
+        }
+        for r in resumes_db.get(uid, {}).values()
+    ]
+    return ok({"items": items})
+
+
+@app.put("/resumes")
+def save_resume(
+    body: ResumeBody,
+    id: Optional[int] = Query(None),
+    user=Depends(get_user),
+):
+    global _next_resume_id
+
+    if not user:
+        return fail("인증이 필요합니다.", [{"code": "UNAUTHORIZED", "message": "로그인이 필요합니다."}], 401)
+
+    errors = []
+
+    if body.oneLineIntro and len(body.oneLineIntro) > 50:
+        errors.append({"code": "INVALID_LENGTH", "field": "oneLineIntro", "message": "한 줄 소개는 50자 이내로 입력해주세요."})
+
+    if body.intro and len(body.intro) > 300:
+        errors.append({"code": "INVALID_LENGTH", "field": "intro", "message": "소개는 300자 이내로 입력해주세요."})
+
+    educations = body.educations or []
+    for edu in educations:
+        if not (edu.get("schoolName") if isinstance(edu, dict) else None):
+            errors.append({"code": "REQUIRED", "field": "educations.schoolName", "message": "학교명을 입력해주세요."})
+            break
+
+    careers = body.careers or []
+    for career in careers:
+        if not (career.get("companyName") if isinstance(career, dict) else None):
+            errors.append({"code": "REQUIRED", "field": "careers.companyName", "message": "회사명을 입력해주세요."})
+            break
+
+    projects = body.projects or []
+    for proj in projects:
+        if not (proj.get("name") if isinstance(proj, dict) else None):
+            errors.append({"code": "REQUIRED", "field": "projects.name", "message": "프로젝트명을 입력해주세요."})
+            break
+
+    skills = body.skills or []
+    if len(skills) != len(set(skills)):
+        errors.append({"code": "DUPLICATE", "field": "skills", "message": "이미 추가된 기술입니다."})
+
+    if errors:
+        return fail("이력서 저장 실패", errors, 400)
+
+    uid = user["id"]
+    if uid not in resumes_db:
+        resumes_db[uid] = {}
+
+    now = datetime.now(timezone(timedelta(hours=9))).strftime("%Y-%m-%dT%H:%M:%S+09:00")
+
+    resume_data = {
+        "title": body.title,
+        "jobRole": body.jobRole,
+        "oneLineIntro": body.oneLineIntro,
+        "intro": body.intro,
+        "educations": educations,
+        "careers": careers,
+        "projects": projects,
+        "skills": skills,
+        "updatedAt": now,
+    }
+
+    if id is not None:
+        if id not in resumes_db[uid]:
+            return fail(
+                "이력서를 찾을 수 없습니다.",
+                [{"code": "NOT_FOUND", "field": "id", "message": "존재하지 않는 이력서입니다."}],
+                404,
+            )
+        resumes_db[uid][id] = {**resume_data, "id": id}
+        return ok({"id": id}, "이력서가 저장되었습니다.")
+
+    new_id = _next_resume_id
+    _next_resume_id += 1
+    resumes_db[uid][new_id] = {**resume_data, "id": new_id}
+    return JSONResponse(
+        {"success": True, "message": "이력서가 저장되었습니다.", "data": {"id": new_id}},
+        status_code=201,
+    )

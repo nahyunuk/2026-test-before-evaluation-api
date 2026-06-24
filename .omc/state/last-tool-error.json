@@ -1,7 +1,7 @@
 {
   "tool_name": "PowerShell",
-  "tool_input_preview": "{\"command\":\"cd C:\\\\Users\\\\user\\\\PycharmProjects\\\\20026-test-api; python -c \\\"import main; q = main.INTERVIEW_QUESTIONS.get('APP'); print('APP 키 존재:', q is not None); [print(f'Q{i[\\\\\\\"questionNumber\\\\\\...",
-  "error": "Exit code 1\n  File \"<string>\", line 1\r\n    import main; q = main.INTERVIEW_QUESTIONS.get('APP'); print('APP Ű ����:', q is not None); [print(f'Q{i[\" questionNumber\\]}:\r\n                                                                                                          ^\r\nSyntaxError: unterminated string literal (detected at line 1)",
-  "timestamp": "2026-06-20T04:49:04.437Z",
+  "tool_input_preview": "{\"command\":\"Get-Process -Name python -ErrorAction SilentlyContinue | Stop-Process -Force\",\"description\":\"Stop python/uvicorn process\"}",
+  "error": "Exit code 1",
+  "timestamp": "2026-06-24T07:44:53.831Z",
   "retry_count": 1
 }

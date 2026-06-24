@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "lastScanned": 1781930582317,
+  "lastScanned": 1782286255106,
   "projectRoot": "C:\\Users\\user\\PycharmProjects\\20026-test-api",
   "techStack": {
     "languages": [
@@ -42,7 +42,7 @@
       "path": "company",
       "purpose": null,
       "fileCount": 15,
-      "lastAccessed": 1781930582271,
+      "lastAccessed": 1782286255066,
       "keyFiles": [
         "aws.png",
         "coupang.png",
@@ -55,7 +55,7 @@
       "path": "interview",
       "purpose": null,
       "fileCount": 25,
-      "lastAccessed": 1781930582272,
+      "lastAccessed": 1782286255068,
       "keyFiles": [
         "be_q1.mp3",
         "be_q2.mp3",
@@ -68,7 +68,7 @@
       "path": "__pycache__",
       "purpose": null,
       "fileCount": 1,
-      "lastAccessed": 1781930582273,
+      "lastAccessed": 1782286255069,
       "keyFiles": [
         "main.cpython-314.pyc"
       ]
@@ -77,21 +77,21 @@
   "hotPaths": [
     {
       "path": "main.py",
-      "accessCount": 38,
-      "lastAccessed": 1781931824820,
+      "accessCount": 11,
+      "lastAccessed": 1782298155453,
+      "type": "file"
+    },
+    {
+      "path": "2026년 전국 기능경기대회 Hire Up - Module C.json",
+      "accessCount": 1,
+      "lastAccessed": 1782286273550,
       "type": "file"
     },
     {
       "path": "",
-      "accessCount": 2,
-      "lastAccessed": 1781931009716,
+      "accessCount": 1,
+      "lastAccessed": 1782286281856,
       "type": "directory"
-    },
-    {
-      "path": "README.md",
-      "accessCount": 2,
-      "lastAccessed": 1781931026840,
-      "type": "file"
     }
   ],
   "userDirectives": []
